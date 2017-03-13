@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="potagerapp" id="ng-app">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/potager.css" />	
+	
+	<script src="lib/angular.min.js"></script>
+	<script src="rotatorWorker.js"></script>
+	<script src="plants.js"></script>
+	<script src="potager-app.js"></script>
+	<script src="potagerController.js"></script>
+	
+	<title>Optimiseur de positionnement de plantes potagères</title> 
+</head>
+<body ng-controller="PotagerController">
+
+<div style="position:absolute;left:0;top:0;right:0;height:16px;" class="header">
+	<div style="float:left;">Optimiseur de positionnement de plantes potagères - <a href="javascript:" ng-click="sourceDataPaneVisible = true;">Données sources</a></div>
+	<div style="float:right;">par Nebio</div>
+</div>
+
+<div style="font-size:90%;color:#555;padding:0px;position:absolute;left:8px;top:38px;">1 - Dessinez la surface cultivable de votre potager. Un carré fait 50cm x 50cm. <a href="/potager" style="color:#5984C9;border-bottom:1px dotted #5984C9;text-decoration:none;">Remettre à zéro</a></div>
+
+<div id="potager" style="position:fixed;left:0px;top:60px;right:400px;bottom:0;border:0px solid blue;overflow:auto;">
+	<a class="block {{block.plant.id ? '' : block.t.replace(' ', '').replace(' ', '')}}" ng-repeat="block in blocks" style="left:{{block.x*120}}px;top:{{block.y*120}}px;" ng-click="clickBlock(block)" href="javascript:">
+		<div class="label">{{block.plant.id ? block.plant.id : block.t}}</div>
+		<div class="blockInfoPane" ng-show="block.infoPaneVisible">
+			<div class="blockInfoPaneTitle">{{block.plant.id | properCase}}</div>
+			<div class="blockInfoPaneInfo">{{block.plant.info | properCase}}</div>		
+			<div class="blockInfoPaneSubTitle">Plantes amies</div>
+			<div class="blockInfoPaneText"><span ng-repeat="f in block.plant.friends">{{f | properCase}}{{$index == block.plant.friends.length-1 ? '' : ', '}}</span></div>
+			<div class="blockInfoPaneSubTitle">Plantes ennemies</div>
+			<div class="blockInfoPaneText"><span ng-repeat="e in block.plant.enemies">{{e | properCase}}{{$index == block.plant.enemies.length-1 ? '' : ', '}}</span></div>
+		</div>
+	</a>
+</div>
+<div id="plantes" style="position:fixed;top:30px;right:0;bottom:0;width:400px;border:0px solid red;overflow:visible;">
+
+	<div ng-show="computeResults">{{computeResults}}</div>
+	
+	<div style="font-size:90%;color:#555;padding:8px;">2 - Sélectionnez les plantes que vous désirez cultiver</div>
+	 
+	<div style="position:absolute;overflow:auto;top:30px;bottom:60px;left:0;right:0;font-size:95%;">
+		<div ng-repeat="plant in plants" style="float:left;width:180px;"> 
+			<input type="checkbox" ng-model="plant.selected" style="width:19px;height:19px;" id="plant{{$index}}" /> <label for="plant{{$index}}">{{plant.id | properCase}}</label>
+		</div>
+	</div>
+
+	<a style="position:absolute;bottom:3px;left:3px;right:3px;padding:18px;color:#fff;text-decoration:none;background-color:#5984C9;margin:2px;border-radius:5px;text-align:center;box-shadow: #999 2px 2px 2px;" ng-click="compute();" href="javascript:">
+		3 - Calculer le positionnement optimal
+	</a>
+</div>
+
+<div id="computePane" style="position:fixed;top:0;right:0;bottom:0;left:0;background-color:rgba(0, 0, 0, 0.5);" ng-show="computing">
+	<div style="width:600px;margin:24px auto">		
+		<div style="background-color:#333;padding:22px;">
+			<div style="float:right;color:#ddd;font-size:90%;">Combinaison <span id="progresstext"></span></div>
+			<div style="color:#eee;">Calcul en cours...</div>			
+			<div id="progressbar" style="height:10px;background-color:red;width:5px;margin:12px 0;"></div>
+		</div>
+	</div>
+</div>
+
+<div id="sourceDataPane"  style="position:fixed;top:0;right:0;bottom:0;left:0;background-color:rgba(255, 255, 255, 0.8);overflow:auto;" ng-show="sourceDataPaneVisible">
+	<a style="float:right;margin:24px;color:#5984C9;border-bottom:1px dotted #5984C9;text-decoration:none;" href="http://permaculturefacile.fr/quoi-planter">Source: permaculturefacile.fr</a>
+	<div style="font-size:120%;margin:24px;">Données sources &nbsp;&nbsp; <a href="javascript:" ng-click="sourceDataPaneVisible = false" style="color:#5984C9;border-bottom:1px dotted #5984C9;text-decoration:none;">Fermer</a></div>
+	<table style="margin:24px;font-size:90%;">
+		<tr><td>Plante</td><td>Amis</td><td>Enemis</td></tr>
+		<tr ng-repeat="plant in plants">
+		<td>{{plant.id}}</td>
+		<td><span ng-repeat="f in plant.friends">{{f}}{{$index == plant.friends.length-1 ? '' : ', '}}</span></td>
+		<td><span ng-repeat="e in plant.enemies">{{e}}{{$index == plant.enemies.length-1 ? '' : ', '}}</span></td>
+	</table>
+</div>
+
+</body>
+</html>

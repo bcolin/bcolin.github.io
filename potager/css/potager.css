@@ -1,0 +1,77 @@
+body {
+	font-family:sans-serif;
+}
+.header {
+	background-color:#f0f0f0;padding:7px 10px;font-size:85%;color:#aaa;
+}
+.header a {
+	color:#aaa;
+	border-bottom:1px dotted #bbb;
+	text-decoration:none;
+}
+
+.block {
+	position:absolute;
+	/*display:block;*/
+	display: table;
+	width:120px;
+	height:120px;
+	/*line-height:120px;*/	
+	text-decoration:none;
+	font-size:85%;
+	color:#555;
+	border-top:1px solid #a9ef99;
+	border-left:1px solid #a9ef99;
+	overflow:visible;
+}
+.block .label {
+  display: table-cell; 
+  vertical-align: middle; 
+  text-align: center; 
+  text-transform:uppercase;
+}
+.block.gazon {
+	background-color:#99cc99;
+	border-top:1px solid #a9ef99;
+	border-left:1px solid #a9ef99;
+	color:#a0f4a4;
+	font-size:105%;
+}
+.block.terre {
+	background-color:#46201A;
+	color:#AE6F68;
+	font-size:105%;
+}
+.blockInfoPane {
+	position:absolute;
+	z-index:99;
+	left:122px;
+	top:3px;
+	width:200px;
+	height:200px;
+	border:2px solid #aaa;
+	border-top-right-radius:9px;
+	border-bottom-right-radius:9px;
+	border-bottom-left-radius:9px;
+	background-color:#fafafa;
+	padding:12px;	
+	overflow:auto;
+}
+.blockInfoPaneTitle {
+	color:#222;
+	font-size:140%;
+}
+.blockInfoPaneInfo {
+	color:#888;
+	font-size:100%;
+	margin:4px 0 0 0;
+}
+.blockInfoPaneSubTitle {
+	color:#777;
+	font-size:85%;
+	margin:10px 0 3px 0;
+}
+.blockInfoPaneText {
+	color:#333;
+	font-size:85%;
+}
