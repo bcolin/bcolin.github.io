@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>	
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+   
+	<script src="lib/rivets.bundled.min.js"></script>  
+	
+	<script src="yams.js"></script>  
+    
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <!--<link rel="stylesheet" href="css/site.css"/>-->
+	<style>
+		*, html, body, div, a, img, textarea, input, select {
+			box-sizing:border-box;
+			font-family: "default", sans-serif;
+			font-size:17px;
+		}
+		*:focus {
+			outline: none;
+		}
+		.button { display:block;padding:12px;background-color:#ccc;color:#666;border-radius:8px; }
+		.button.hl { background-color:#7889ed; color:#fefefe; font-weight:bold; }
+		input[type="radio"] { display:block;width:26px;height:26px;float:left; }
+		label { display:block;height:26px;float:left;padding:6px 12px 0 12px; }
+		.row { height:30px;border-bottom:1px solid #ddd;padding:7px 0 0 0;margin:0;font-size:85%;color:#888; }
+		.rowheader { height:30px;font-size:105%;text-align:center;position:relative; }
+		.leftcol { background-color:#f9f9f9; text-align:center; }
+		.player { /*width:110px;*/ float:left;/* border-right:1px solid #bbb;*/ margin:0; border-left:3px solid #ccc; }
+		.col { /* width: 108px;*/ float:left;border-right:1px solid #ddd; margin:0; }
+		.cell { display:block;height:30px;width:100%;/*50px;*/text-align:center;border-bottom:1px solid #ddd; padding: 0; margin:0; padding-top:5px;overflow:hidden; }		
+		.cell.selected { border:1px solid #ffaacc;background-color:#ffdddd; }
+		.cell.tempdisplay { color:#aaa; font-style: italic; }
+		.cell.hoverable { cursor:pointer; }
+		.cell.hoverable:hover { background-color:#ffddee; }
+		.cell.col3 { background-color:#fafafa; width:300%; }
+		.cell.bonus { font-size:70%;padding-top:7px;color:#44dd44;font-weight:bold; }
+		.spacer { height: 14px; }
+		/*input.cell { border:0; background-color:transparent;text-align:center; margin:0; border-bottom:1px solid #ddd; }*/
+		.bottomborder { border-bottom: 2px solid #ddd; }
+		.scorepickpane { position:fixed; left 90px;top:90px; background-color:#fff; border-radius:12px; padding:12px; width:300px; /*border:1px solid #aaa;*/ }
+		/*.scorepick { padding:16px 26px; border:2px solid #888; border-radius:12px;float:left; font-size:150%; cursor:pointer; margin:4px; }*/
+		.scorepick { display:block;overflow:auto;padding:0;margin:0;cursor:pointer; }
+		.scorepick:hover { background-color:#ffefef; }
+		.scorepick.special { border:2px solid #d3d3d3; border-radius:6px;;text-align:center;margin:4px;padding:8px;color:#888; }
+		.des { float:left; width:44px; height:44px; border:2px solid #d3d3d3; border-radius:6px; margin: 4px; text-align:center; overflow:hidden; }
+		.des img { width:100%; }
+		.shadow { box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2); }
+	</style>
+	
+</head>
+<body>
+	<audio id="haha" src="snd/haha.mp3" controls="no" style="display:none;"></audio>
+	<audio id="applause" src="snd/applause.mp3" controls="no" style="display:none;"/></audio>
+
+
+    <div id="view" style="position:fixed;left:0;top:0;right:0;bottom:0;/*background-color:#fff;*/" rv-on-click="ui.onDocClick">
+
+		<div style="position:fixed;left:0;top:30px;width:100px;">
+			<div rv-each-row="ui.displayRows" rv-html="row.displayName" class="row leftcol" rv-class-bottomborder="row.isBottomBorder" rv-class-spacer="row.isSpacer"></div>
+		</div>
+		<div style="position:fixed;left:100px;top:0;">
+			<div rv-each-player="ui.sheet.players" class="player">
+				<div class="row rowheader">
+					<input type="text" rv-value="player.name" style="display:block;position:absolute;left:5%;top:0;width:90%;border:0;text-align:center;font-size:90%;padding-top:5px;"/>
+				</div>
+				<div style="overflow:auto;">
+					<div class="col" rv-each-col="player.cols" rv-style="ui.columnStyle">
+						<div rv-each-cell="col.data">
+							<a class="cell" rv-hide="cell.isFreeValue" rv-text="cell.v" rv-on-click="ui.onCellClick" rv-class-selected="cell.isSelected" rv-class-hoverable="cell.isHoverable" rv-class-tempdisplay="cell.isTempDisplay" rv-class-bottomborder="cell.isBottomBorder" rv-class-spacer="cell.isSpacer" rv-class-col3="cell.isOnly3Col"rv-class-bonus="cell.isBonusDisplay"></a>
+							<!--<input class="cell" type="text" rv-value="cell.v" rv-show="cell.isFreeValue" rv-on-click="ui.onCellInputClick" />-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="scorepickpane shadow" rv-show="ui.isScorePicksVisible" id="scorepickpane">
+			<div style="overflow:auto;">
+				<a class="scorepick special" rv-on-click="ui.onScorePickMiss" rv-hide="ui.isFreeValueVisible">Raté</a>
+				<a class="scorepick" rv-each-scorepick="ui.scorePicks" rv-on-click="ui.onScorePick">
+					<div class="des" rv-each-des="scorepick.helper">
+						<img rv-src="ui.getDesImg | call des" />
+					</div>
+				</a>
+				<div rv-show="ui.isFreeValueVisible">
+					<input type="text" style="display:block;border-radius:4px;width:70px;margin:0 auto;border:2px solid #666;padding:12px;text-align:center;" id="freeValue" onclick="event.stopPropagation();" rv-on-keyup="ui.onFreeValueKeyUp" rv-value="ui.selectedCell.v" />
+				</div>
+				<a class="scorepick special" rv-on-click="ui.onScorePickClear">Effacer</a>
+			</div>
+		</div>
+		
+	
+		<a rv-on-click="ui.onNewGameClick" style="position:fixed;right:4px;bottom:4px;width:60px;height:60px;border-radius:30px;background-color:#7889ed;"></a>
+		
+		<a rv-on-click="ui.onFullScreenClick" style="position:fixed;right:0;top:0px;width:60px;"><img src="img/fullscreen.png" style="width:100%;"/></a>
+		
+		<a rv-on-click="ui.onFullScreenClick" style="position:fixed;right:0;top:90px;width:60px;"><img src="img/stat.png" style="width:100%;"/></a>
+		
+		<a rv-on-click="ui.onStatAddClick" style="position:fixed;right:0;top:180px;width:60px;"><img src="img/statadd.png" style="width:100%;"/></a>
+		
+		<div rv-show="ui.isDialogVisible" style="position:fixed;left:0;right:0;bottom:0;top:0;background-color:rgba(255,255,255, .5);" rv-class-active="ui.isDialogVisible">
+			<!--<div style="display:table-cell;left:0;top:0;width:100%;height:100%;vertical-align:middle;text-align:center">-->
+			
+				<div style="display:flex;position:fixed;left:0;right:0;bottom:0;top:0;align-items:center;justify-content:center;width:100%;height:100%;text-align:center;">
+				
+					<div style="background-color:#fff;border-radius:12px;padding:12px 24px;" class="shadow">
+				
+						<div rv-show="ui.isDialogStartGame">
+							<div><table style="width:90%;margin:12px auto;"><tr><td style="padding-right:24px;">Nombre de joueurs</td>
+							
+							<td><a class="button" rv-on-click="ui.onNewGameDelPlayer">-</a></td>
+							<td><input type="text" rv-value="ui.newGamePlayerCount" style="width:36px;padding:12px;text-align:center;"/></td>
+							<td><a class="button" rv-on-click="ui.onNewGameAddPlayer">+</a></td>
+							</tr></table></div>
+							<div style="overflow:auto;text-align:center;padding:12px;">
+								<div style="display:inline-block;padding:12px;">
+									<input type="radio" rv-checked="ui.newGameColumnCount" rv-value="1" name="ngonecolumn" id="ngonecolumn"/> <label for="ngonecolumn">Une colonne</label>
+								</div>
+								<div style="display:inline-block;padding:12px;">
+									<input type="radio" rv-checked="ui.newGameColumnCount" rv-value="3" name="ng3column" id="ng3column"/> <label for="ng3column">Trois colonnes</label>
+								</div>
+							</div>
+						</div>
+						<div>
+							<a class="button" style="float:left;width:150px;margin:12px;" rv-each-dialogbutton="ui.dialogButtons" rv-on-click="dialogbutton.onClick" rv-class-hl="dialogbutton.isHL" rv-html="dialogbutton.html"></a>
+						</div>
+						
+					</div>
+						
+				</div>
+			
+			<!--</div>-->
+		</div>
+		
+		
+    </div>
+	
+</body>
+</html>

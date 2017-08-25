@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>	
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+   
+	<script src="lib/rivets.bundled.min.js"></script>  
+	
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <!--<link rel="stylesheet" href="css/site.css"/>-->
+	<style>
+		*, html, body, div, a, img, textarea, input, select {
+			box-sizing:border-box;
+			font-family: "default", sans-serif;
+			font-size:17px;
+		}
+		*:focus {
+			outline: none;
+		}
+		.block { margin: 24px; padding: 24px; border: 1px solid #ccc; float: left; width: 480px; }
+	</style>
+	
+</head>
+<body>
+	
+    <div id="view" style="position:fixed;left:0;top:0;right:0;bottom:0;background-color:#fff;overflow:auto;">
+
+		<p>stats</p>
+		
+		<div class="block" rv-each-stat="ui.stats" >
+			<div rv-text="stat.title"></div>
+			<table>
+			<tr rv-each-d="stat.data">
+				<td rv-text="d.name" style="width:80px;"></td>
+				<td>{ d.value } { stat.unity }</td>
+			</tr>			
+		</div>
+		
+		<!--
+		<div class="block">
+			<div>Nb parties gagnées</div>
+			<div rv-each-d="stats.nbVictories">
+				<span rv-text="d.name"></span> : 
+				<span rv-text="d.value"></span>
+			</div>		
+		</div>
+		<div class="block">
+			<div>% parties gagnées</div>
+			<div rv-each-d="stats.nbVictoriesBG">
+				<span rv-text="d.name"></span> : 
+				<span rv-text="d.value"></span> %
+			</div>		
+		</div>
+		<div class="block">
+			<div>Meilleur score 3 colonnes</div>
+			<div rv-each-d="stats.threeColScores">
+				<span rv-text="d.name"></span> : 
+				<span rv-text="d.value"></span> %
+			</div>		
+		</div>
+		<div class="block">
+			<div>Meilleur score 1 colonne</div>
+			<div rv-each-d="stats.oneColScores">
+				<span rv-text="d.name"></span> : 
+				<span rv-text="d.value"></span> %
+			</div>		
+		</div>
+		-->
+		
+		
+		
+    </div>
+	
+	<script>
+	
+	document.addEventListener( 'DOMContentLoaded', function() {
+
+		rivets.bind( document.getElementById( 'view' ), { ui: Stats } );
+		
+		Stats.build();
+		
+	});
+	
+	var Stats = {
+	
+		stats: [],
+	
+		nbVictories: [],
+		nbVictoriesBG: [],
+		
+		oneColScores: [],
+		threeColScores: [],
+		
+		nbYamsBG: [],
+		nbCarreBG: [],
+		nbNumberBonusBG: [],
+		nbPSBG: [],
+		nbGSBG: [],
+		nbBordelaisBG: [],
+	
+		build: function () {
+		
+			var stats = JSON.parse( window.localStorage.getItem( 'stats' ) );
+		
+		
+			for ( var playerName in stats.playerStats ) {
+			
+				if ( stats.playerStats.hasOwnProperty( playerName ) ) {
+					
+					var playerStat = stats.playerStats[ playerName ];
+				
+					var playerVictories = { name: playerName, value: playerStat.gameWinCount };
+					Stats.nbVictories.push( playerVictories );
+					var playerVictoriesBG = { name: playerName, value: parseInt( 100 * playerStat.gameWinCount / playerStat.gamePlayedCount ) };
+					Stats.nbVictoriesBG.push( playerVictoriesBG );
+					
+					var oneColScore = { name: playerName, value: playerStat.bestScoreOneCol };
+					Stats.oneColScores.push( oneColScore );
+					var threeColScore = { name: playerName, value: playerStat.bestScoreThreeCol };
+					Stats.threeColScores.push( threeColScore );
+					
+					var yamsCount = { name: playerName, value: parseInt( 100 * playerStat.yamsCount / playerStat.gamePlayedCount ) };
+					Stats.nbYamsBG.push( yamsCount );
+					
+					var carreCount = { name: playerName, value: parseInt( 100 * playerStat.carreCount / playerStat.gamePlayedCount ) };
+					Stats.nbCarreBG.push( carreCount );
+					
+					var nBonusCount = { name: playerName, value: parseInt( 100 * playerStat.numberBonusCount / playerStat.gamePlayedCount ) };
+					Stats.nbNumberBonusBG.push( nBonusCount );
+					
+					var psCount = { name: playerName, value: parseInt( 100 * playerStat.smallSuiteCount / playerStat.gamePlayedCount ) };
+					Stats.nbPSBG.push( psCount );
+					
+					var gsCount = { name: playerName, value: parseInt( 100 * playerStat.bigSuiteCount / playerStat.gamePlayedCount ) };
+					Stats.nbGSBG.push( gsCount );
+					
+					var bordCount = { name: playerName, value: parseInt( 100 * playerStat.bordelaisCount / playerStat.gamePlayedCount ) };
+					Stats.nbBordelaisBG.push( bordCount );
+				
+				}
+			
+			}
+		
+			Stats.nbVictories.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbVictoriesBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.oneColScores.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.threeColScores.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			
+			Stats.nbYamsBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbCarreBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbNumberBonusBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbPSBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbGSBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+			Stats.nbBordelaisBG.sort( function ( a, b ) { return a.value < b.value ? 1 : -1; } );
+		
+			Stats.stats.push( { title: '% de victoires par match', data: Stats.nbVictoriesBG, unity: '%' } );
+			Stats.stats.push( { title: 'Nombre de victoires total', data: Stats.nbVictories } );
+			Stats.stats.push( { title: 'Meilleur score 3 colonnes', data: Stats.threeColScores } );
+			Stats.stats.push( { title: 'Meilleur score 1 colonne', data: Stats.oneColScores } );
+		
+			Stats.stats.push( { title: "% de yam's réussis par match", data: Stats.nbYamsBG, unity: '%' } );
+			Stats.stats.push( { title: "% de carrés réussis par match", data: Stats.nbCarreBG, unity: '%' } );
+			Stats.stats.push( { title: "% de bonus numéros réussis par match", data: Stats.nbNumberBonusBG, unity: '%' } );
+			Stats.stats.push( { title: "% de petites suites réussies par match", data: Stats.nbPSBG, unity: '%' } );
+			Stats.stats.push( { title: "% de grandes suites réussies par match", data: Stats.nbGSBG, unity: '%' } );
+			Stats.stats.push( { title: "% de 8 bordelais réussis par match", data: Stats.nbBordelaisBG, unity: '%' } );
+		}
+	
+	};
+
+	
+	
+	</script>
+	
+</body>
+</html>
