@@ -18,15 +18,18 @@
 
 	<div id="scene" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
 
-	<div style="position:absolute;left:0;top:0;right:0;">
+	<div id="infome" style="position:absolute;left:0;top:0;right:0;">
 	
-		<div class="panel" style="">
+		<div class="panel">
 				
-			<img src="img/me.png" class="me" style=""/>
+			<img src="img/me.png" class="me"/>
 			
-			<div class="metext" style="">		
+			<div class="metext">		
 				<div style="font-size:22px;">Benoit Colin</div>
-				<div style="margin-top:6px;color:#aaa;font-size:15px;">Consultant indépendant<br/>Corporate Startupeur</div>
+				<div style="margin-top:6px;color:#aaa;font-size:13px;">
+					<div>Consultant indépendant</div>
+					<div style="margin:4px 0">Corporate Startupeur</div>
+				</div>
 				<!--<div class="availability" style="">
 					<img src="img/available.png" style="height:12px;display:block;margin:0 6px 0 0;"/>
 					<div style="color:#66bb55;font-size:85%;">Disponible</div>
@@ -35,7 +38,7 @@
 			<div style="clear:both;"></div>
 			<div style="font-size:90%;margin:24px 0 0 0;">
 			
-			<div style="text-align:center;font-size:15px;">
+			<div style="text-align:center;font-size:13px;">
 			<div style="margin:4px 0">Idéation et conception d'applications web et mobiles</div>
 			<div style="margin:4px 0">Direction technique full-stack</div>
 			</div>			
@@ -56,7 +59,7 @@
 	
 	<div id="backlayer" style="display:block;position:fixed;left:0;top:0;right:0;bottom:0;background-color:rgba(0,0,0,.5);transition:all .3s;opacity:0;pointer-events:none;"></div>
 	
-	<div id="menu" style="position:fixed;left:0;top:0;bottom:0;transition:all .6s;opacity:0;pointer-events:none;transform:translateX(-100%);background-color:#ffffff;/*border-right:1px solid #ddd*/;width:300px;overflow:auto;box-shadow:-3px 0 6px 6px rgba(60,60,60,.3);">
+	<div id="menu" style="position:fixed;left:0;top:0;bottom:0;transition:all .6s;opacity:0;pointer-events:none;transform:translateX(-100%);background-color:#ffffff;/*border-right:1px solid #ddd*/;width:300px;overflow:auto;box-shadow:-3px 0 6px 6px rgba(60,60,60,.3);z-index:1000;">
 		
 		<a onclick="ctrl.onBackClick(event);" style="position:absolute;display:block;left:18px;top:18px;width:30px;height:30px;opacity:.25;cursor:pointer;"><img src="img/cross.png" style="width:100%;"/></a>
 		
@@ -107,7 +110,7 @@
 			</div>
 			<img src="img/menuright.png" class="menuright"/>
 		</a>
-		
+
 		<!--<a class="menuitem" href="playground/potager">
 			<div>
 				<div class="menuitemtitle">Potager</div>
