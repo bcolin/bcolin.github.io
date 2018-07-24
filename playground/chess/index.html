@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>	
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+	<meta NAME="Keywords" CONTENT="Benoit Colin freelance consultant indépendant développement application web mobile ui ux">
+	<meta NAME="Description" CONTENT="Benoit Colin">
+	
+	<link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="/css/normalize.css"/>
+	<link rel="stylesheet" href="css/chess.css"/>
+	
+	<script type="text/javascript" src="lib/DragDropTouch.js"></script>
+	<script type="text/javascript" src="lib/three89.min.js"></script>
+	<script type="text/javascript" src="js/min.js"></script>
+</head>
+<body>
+	
+	<div id="ui2d">
+
+		<div id="cb" style="border:2px solid #ddd;margin:62px auto 0 auto;background:url(img/boardtile.png);background-size:160px;background-repeat:repeat;position:relative;" >
+		</div>
+	
+	</div>
+	
+	<div id="scene" style="position:fixed;left:0;top:0;right:0;bottom:0;width:100%;height:100%;"></div>
+	
+	<div style="position:fixed;top:6px;right:6px;opacity:.3;">
+		<div style="margin:12px;overflow:hidden;justify-content:left;" class="switchcontainer" id="uitypeswitch">
+			<a onclick="" style="display:block;margin-right:4px;">2d</a>
+			<a class="switch" style="float:left;" rv-class-checked="ui.writedMsg.isQuestion" onclick="">
+				<div class="inner"><!--<img src="img/checkgreen.png" rv-show="ui.writedMsg.isQuestion" style="position:absolute;left:30%;top:30%;width:40%;height:40%;"/>--></div>
+			</a>
+			<a onclick="" style="display:block;margin-left:4px;">3d</a>
+		</div>
+	</div>
+	
+	<a onclick="bchess.onTitleClick();" style="position:fixed;display:block;left:12px;top:24px;color:#ccc;font-size:90%;">bchess</a>
+	
+	<div id="progressbar" style="position:fixed;left:0;top:0;right:0;height:4px;transition:all .3s;opacity:0;pointer-events:none;background-color:#88ee88;margin:0 auto;"></div>
+	
+	<div id="endgame" class="endgame">
+		<div id="endgametext">You win!</div>
+		<a onclick="bchess.onNewGameClick();" style="display:inline-block;background-color:#FFA060;color:#fff;padding:4px 8px;margin-top:4px;border-radius:4px;">New game</a>
+	</div>
+	
+	<div id="infopane" style="transition:all .5s;opacity:0;transform:translateY(+100%);position:fixed;left:0;bottom:0;right:0;background-color:#ffffff;border-top:1px solid #ddd;padding:24px;line-height:1.5;color:#555;overflow:auto;max-height:75%;">
+		<!--<div style="float:right;font-size:85%;">Par <a href="/">Benoit Colin</a></div>-->
+		<a onclick="bchess.onTitleClick();" style="position:absolute;right:24px;top:24px;width:40px;height:40px;opacity:.2;display:block;"><img src="img/cross.png" style="width:100%;"/></a>
+		
+		<div style="margin:24px auto 18px auto;width:100%;max-width:600px;">			
+			<p>Soyons réaliste, le niveau de ce petit moteur n'a rien à voir avec celui des programmes d'échecs évolués. En fait, il joue aussi mal que moi :)</p>
+			<p>A tout moment, changez entre un plateau 2d et 3d. Ce moteur est réalisé en javascript (vanilla) : c'est votre navigateur qui effectue tous les calculs. Grace aux webworkers, cela se passe en arrière-plan. </p>
+			
+			<p>bchess a été conçu et réalisé par <a href="/" style="border-bottom:1px dotted #aaa;">Benoît Colin</a>. La librairie <a href="http://threejs.org" target="_blank">threejs</a> a été utilisée pour le rendu 3D.</p>
+			
+			<div style="display:flex;align-items:center;justify-content:left;font-size:70%;padding-top:24px;">
+				<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+				<div style="margin-left:8px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale 4.0 International</a></div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<script>
+		
+	document.addEventListener( "DOMContentLoaded", function () {
+		
+		bchess.start();
+		
+	});
+		
+	</script>
+</body>
+</html>	

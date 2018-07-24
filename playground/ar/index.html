@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>	
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+	<meta NAME="Keywords" CONTENT="Benoit Colin freelance consultant indépendant développement application web mobile ui ux">
+	<meta NAME="Description" CONTENT="Benoit Colin">
+	
+	<link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="/css/normalize.css"/>
+	<link rel="stylesheet" href="/css/site.css"/>
+	
+</head>
+<body>
+
+	<a style="position:absolute;left:12px;top:12px;display:block;width:32px;height:32px;" href="/"><img src="/img/home.png" style="width:100%;opacity:.15;"/></a>
+	
+	<div style="width:100%;max-width:700px;margin:0 auto;position:relative;line-height:1.4;">
+		<div style="text-align:center;margin:48px;font-size:120%;">Expérimentations réalité augmentée</div>
+		
+		<div style="overflow:hidden;display:flex;align-items:center;justify-content:left;">
+			<div style="font-size:200%;margin:0 12px;">#1</div>
+			<div style="margin:0 0 0 24px;font-size:90%;color:#666;">
+				<div>Détection des translations de l'appareil par analyse d'image temps réel<span style="color:#000;font-size:180%."> &bull; </span>Fonctionne en théorie avec tous les appareils, ne nécessite pas un appareil récent</div>
+			</div>
+		</div>
+		<iframe src="https://drive.google.com/file/d/1Ocg4dWPU8z_z2I7KVcqIRoUhCkh1rA1V/preview" style="width:100%;border:0;margin:24px 0;"></iframe>
+		<!-- old https://drive.google.com/file/d/19YtbVslVW90VUh_iwVKUgP464X1e0kQ0/preview -->
+		
+		
+		<div style="overflow:hidden;display:flex;align-items:center;justify-content:left;">
+			<div style="font-size:200%;margin:0 12px;">#2</div>
+			<div style="margin:0 0 0 24px;font-size:90%;color:#666;">Apprentissage, puis détection d'un élément d'environnement en temps réel par machine learning</div>
+		</div>
+		<iframe src="https://drive.google.com/file/d/12EBO6pEx5rrLLYwCtG95FN9prhPsbY1t/preview" style="width:100%;border:0;margin:24px 0;"></iframe>
+		
+		
+		<div style="overflow:hidden;display:flex;align-items:center;justify-content:left;">
+			<div style="font-size:200%;margin:0 12px;">#3</div>
+			<div style="margin:0 0 0 24px;font-size:90%;color:#666;">
+				<div>Un peu de poésie</div>
+			</div>
+		</div>
+		<iframe src="https://drive.google.com/file/d/1JFSRa3rcr1r9gyCtaeBOYw6GK9X0SMA3/preview" style="width:100%;border:0;margin:24px 0;"></iframe>
+		
+	</div>
+	
+	<script>
+	function layout() {
+		var h = ( Math.min( 700, window.innerWidth ) * .564 ) + "px";
+		document.querySelectorAll("iframe").forEach( function ( elm ) { elm.style.height = h; } );
+	}
+	document.addEventListener( "DOMContentLoaded", layout );
+	</script>
+	
+</body>
+</html>	

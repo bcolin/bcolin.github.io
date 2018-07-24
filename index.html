@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>	
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=0.25, maximum-scale=4">
+	<meta NAME="Keywords" CONTENT="Benoit Colin freelance consultant indépendant développement application web mobile ui ux">
+	<meta NAME="Description" CONTENT="Benoit Colin">
+	
+	<link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/normalize.css"/>
+	<link rel="stylesheet" href="css/site.css"/>
+	<script type="text/javascript" src="lib/three89.min.js"></script>
+	<script type="text/javascript" src="js/min.js"></script>
+</head>
+<body>
+
+	<div id="hider" style="position:fixed;left:0;top:0;right:0;bottom:0;background-color:#fdfdfd;transition:all 1.5s;opacity:1;z-index:999;"></div>
+
+	<div id="scene" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+
+	<div style="position:absolute;left:0;top:0;right:0;">
+	
+		<div class="panel" style="">
+				
+			<img src="img/me.png" class="me" style=""/>
+			
+			<div class="metext" style="">		
+				<div style="font-size:22px;">Benoit Colin</div>
+				<div style="margin-top:6px;color:#aaa;font-size:15px;">Consultant indépendant<br/>Corporate Startupeur</div>
+				<!--<div class="availability" style="">
+					<img src="img/available.png" style="height:12px;display:block;margin:0 6px 0 0;"/>
+					<div style="color:#66bb55;font-size:85%;">Disponible</div>
+				</div>-->
+			</div>
+			<div style="clear:both;"></div>
+			<div style="font-size:90%;margin:24px 0 0 0;">
+			
+			<div style="text-align:center;font-size:15px;">
+			<div style="margin:4px 0">Idéation et conception d'applications web et mobiles</div>
+			<div style="margin:4px 0">Direction technique full-stack</div>
+			</div>			
+			
+			<a href="#contact" style="cursor:pointer;display:block;margin:24px auto 8px auto;width:200px;background-color:#FFA060;padding:18px;text-align:center;color:#fff;border-radius:6px;text-decoration:none;">Contactez-moi</a>
+			
+			</div>
+			
+		</div>
+	</div>
+	
+	<a href="#contact" style="position:fixed;right:18px;top:16px;display:flex;justify-content:center;align-items:center;opacity:.8;">
+		<img src="img/available.png" style="height:12px;display:block;margin:0 6px 0 0;"/>
+		<div style="color:#66bb55;font-size:85%;margin-top:1px;">Disponible</div>
+	</a>
+			
+	<a href="#burger" style="position:fixed;left:0;top:0;padding:18px;width:80px;height:80px;display:block;"><img src="img/menu.png" style="width:100%;opacity:.15;"/></a>	
+	
+	<div id="backlayer" style="display:block;position:fixed;left:0;top:0;right:0;bottom:0;background-color:rgba(0,0,0,.5);transition:all .3s;opacity:0;pointer-events:none;"></div>
+	
+	<div id="menu" style="position:fixed;left:0;top:0;bottom:0;transition:all .6s;opacity:0;pointer-events:none;transform:translateX(-100%);background-color:#ffffff;/*border-right:1px solid #ddd*/;width:300px;overflow:auto;box-shadow:-3px 0 6px 6px rgba(60,60,60,.3);">
+		
+		<a onclick="ctrl.onBackClick(event);" style="position:absolute;display:block;left:18px;top:18px;width:30px;height:30px;opacity:.25;cursor:pointer;"><img src="img/cross.png" style="width:100%;"/></a>
+		
+		<div class="menutitle" style="margin-top:76px;">Projets</div>
+		<a class="menuitem" title="Work in progress!..">
+			<div>
+				<div class="menuitemtitle">Soleil</div>
+				<div class="menuitemdesc">Réseau social d'entreprise que l'on a envie d'utiliser.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+		<a class="menuitem" href="http://gmkr.me" target="_blank">
+			<div>
+				<div class="menuitemtitle">Gmkr</div>
+				<div class="menuitemdesc">Plateforme de jeu 2d avec éditeur et partage de cartes.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+		
+		<div class="menutitle">Audio</div>
+		<a class="menuitem" href="https://nebio.bandcamp.com" target="_blank">
+			<div>
+				<!-- <div class="menuitemtitle">Musique</div> -->
+				<div class="menuitemdesc">J'ai publié quelques albums de musique idm/electronica sous le nom de <b>Nebio</b>.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+
+		<div class="menutitle">Expériences</div>
+		<a class="menuitem" href="playground/chess">
+			<div>
+				<div class="menuitemtitle">Bchess</div>
+				<div class="menuitemdesc">Moteur de jeu d'échecs en javascript avec un rendu 2d ou 3d.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+		<a class="menuitem" href="playground/ar">
+			<div>
+				<div class="menuitemtitle">Réalité augmentée</div>
+				<div class="menuitemdesc">Expériences de computervision avec un moteur fait maison.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+		<a class="menuitem" href="https://play.google.com/store/apps/details?id=nebiogames.oidsandroid" target="_blank">
+			<div>
+				<div class="menuitemtitle">Smoot</div>
+				<div class="menuitemdesc">Tower-defense avec des bulles et de la gravitation.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>
+		<!--<a class="menuitem" href="playground/potager">
+			<div>
+				<div class="menuitemtitle">Potager</div>
+				<div class="menuitemdesc">Optimisation des positions des plantes selon la permaculture.</div>
+			</div>
+			<img src="img/menuright.png" class="menuright"/>
+		</a>-->
+		
+		<div class="menutitle">Ailleurs</div>
+		
+		<div style="overflow:hidden;margin:0 0 24px 24px;">
+			<a style="display:block;float:left;width:32px;height:32px;margin:12px 12px 0 0;" href="https://twitter.com/thebfx" target="_blank"><img src="img/twitter.png" style="width:100%;opacity:.2;"/></a>
+			<a style="display:block;float:left;width:32px;height:32px;margin:12px 12px 0 0;" href="https://www.linkedin.com/in/bntcolin/" target="_blank"><img src="img/linkedin.png" style="width:100%;opacity:.2;"/></a>
+		</div>
+	</div>
+	
+	<div id="contactme" onclick="ctrl.onBackClick(event);" style="position:fixed;left:0;top:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;transition:all .6s;opacity:0;pointer-events:none;transform:translateY(-200px) scale(.5,.5);/*background-color:rgba(0,0,0,.5);*/">
+	
+		<div style="background-color:#fdfdfd;width:100%;min-width:340px;max-width:500px;padding:24px;/*border-radius:6px;*/position:relative;">
+		
+			<a onclick="ctrl.onBackClick(event);" style="position:absolute;display:block;right:24px;top:24px;width:32px;height:32px;opacity:.25;cursor:pointer;"><img src="img/cross.png" style="width:100%;"/></a>
+					
+			<div style="margin:24px;">
+			
+			<div style="text-align:left;margin:24px 0 24px 0;color:#555;font-size:110%;">Echangeons sur votre projet</div>
+			
+			<a onclick="event.stopPropagation();" id="c1link" style="cursor:pointer;height:60px;display:flex;justify-content:left;align-items:center;margin:36px 0 8px 0;width:280px;background-color:#FFA060;padding:18px;text-align:center;border-radius:6px;text-decoration:none;overflow:hidden;">			
+				<img src="img/email.png" style="display:block;height:18px;margin-left:4px;opacity:.8;"/>
+				<div id="c1" class="shuffled" style="margin-left:18px;transition:transform 3s;font-size:110%;color:#ffffff;"></div>			
+			</a>
+			<a onclick="event.stopPropagation();" id="c2link" style="cursor:pointer;height:60px;display:flex;justify-content:left;align-items:center;margin:12px 0 8px 0;width:280px;background-color:#FFA060;padding:18px;text-align:center;border-radius:6px;text-decoration:none;overflow:hidden;">			
+				<img src="img/phone.png" style="display:block;height:28px;margin-left:3px;opacity:.8;"/>
+				<div id="c2" class="shuffled" style="margin-left:18px;transition:transform 3s;font-size:110%;color:#ffffff;"></div>			
+			</a>
+			
+			</div>
+			
+			<div style="display:flex;justify-content:center;align-items:center;height:50px;margin-top:12px;">
+				<img src="img/available.png" style="height:16px;display:block;margin:0 10px 0 0;"/>
+				<div style="color:#66bb55;font-size:95%;margin:2px 0 0 0;">Disponible</div>
+			</div>
+			
+		</div>
+	
+	</div>
+	
+</body>
+</html>	
